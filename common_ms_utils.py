@@ -53,7 +53,6 @@ def call_service(service_name: str, data: Optional[Dict[str, Any]] = None) -> Di
     except json.JSONDecodeError as e:
         raise Exception(f'Failed to decode JSON from service {service_name}: {response.text}') from e
     
-    print(f'Called service {service_name} with response: {result}')
     return result
 
 
