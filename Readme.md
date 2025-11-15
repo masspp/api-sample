@@ -1,3 +1,4 @@
+[Japanese language version](Readme.jpn.md)
 ## Document for Mass Spectrometry Data Processing API
 
 ## 📋 Contents
@@ -560,4 +561,4 @@ curl -i -X POST http://localhost:8191/io_create_sample \
 
 ---
 
-*This API is designed for efficient processing of mass spectrometry data. Please refer to the implementation examples in each language to develop a client suitable for your environment.**
+*This API is designed for efficient processing of mass spectrometry data. Please refer to the implementation examples in each language to develop a client suitable for your environment.*
