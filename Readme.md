@@ -2,7 +2,7 @@
 
 ## 📋 Contents
 1. [Quickstart](#Quickstart)
-2. [API Overview](#API Overview)
+2. [API Overview](#api-overview)
 3. [Setup Guide](#Setup Guide)
 4. [API Specifications](#api specifications)
 5. [Implementation examples by language](#Implementation examples by language)
