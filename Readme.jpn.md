@@ -1,36 +1,36 @@
-## Document for Mass Spectrometry Data Processing API
+## 質量分析データ処理API ドキュメント
 
-## 📋 Contents
-1. [Quickstart](#Quickstart)
-2. [API Overview](#api overview)
-3. [Setup Guide](#Setup Guide)
-4. [API Specifications](#api specifications)
-5. [Implementation examples by language](#Implementation examples by language)
-6. [Troubleshooting](#troubleshooting)
+## 📋 目次
+1. [クイックスタート](#クイックスタート)
+2. [API概要](#api概要)
+3. [セットアップガイド](#セットアップガイド)
+4. [API仕様](#api仕様)
+5. [言語別実装例](#言語別実装例)
+6. [トラブルシューティング](#トラブルシューティング)
 
 ---
 
-## 🚀 Quickstart
+## 🚀 クイックスタート
 
-### Basic usage flow
+### 基本的な使用フロー
 
 ```
-1. Sample creation        -> POST /io_create_sample
-2. Adding Spectrum    -> POST /io_add_scan
-3. Adding notes (optional)    -> POST /io_add_annotation
-4. Saving data         -> POST /io_flush
-5. Data Retrieval         -> POST /io_get_spectrum
+1. サンプル作成        → POST /io_create_sample
+2. スペクトラム追加    → POST /io_add_scan
+3. 注釈追加（任意）    → POST /io_add_annotation
+4. データ保存         → POST /io_flush
+5. データ抽出         → POST /io_get_spectrum
 ```
 
-### Minimal operation check
+### 最小限の動作確認
 
 ```bash
-# 1. Sample creation
+# 1. サンプル作成
 curl -X POST http://localhost:8191/io_create_sample \
   -H "Content-Type: application/json" \
   -d "null"
 
-# 2. Check the total spectrum number
+# 2. スペクトラム総数確認
 curl -X POST http://localhost:8191/io_get_spectra_count \
   -H "Content-Type: application/json" \
   -d "null"
@@ -38,61 +38,61 @@ curl -X POST http://localhost:8191/io_get_spectra_count \
 
 ---
 
-## 📖 API Overview
+## 📖 API概要
 
-### Basic Information
-- **Base URL**: `http://localhost:8191/`
-- **Protocol**: HTTP REST API
-- **Method**: POST（All endpoints）
-- **Data Format**: JSON
-- **Authentication**: Unnecessary
-- **Character encoding**: UTF-8
+### 基本情報
+- **ベースURL**: `http://localhost:8191/`
+- **プロトコル**: HTTP REST API
+- **メソッド**: POST（全エンドポイント）
+- **データ形式**: JSON
+- **認証**: 不要
+- **文字エンコーディング**: UTF-8
 
-### Key Features
-- Mass Spectral Data Submission
-- Adding Peak Annotations
-- Data Persistence
-- Retrieving Spectrum Data
+### 主な機能
+- 質量分析スペクトラムデータの登録
+- ピーク注釈の追加
+- データの永続化
+- スペクトラムデータの抽出
 
 
 ---
 
-## Setup Guide
+## セットアップガイド
 
-### Server requirements
-- **Mass++ Server**: Running on port 8191
-- **OS**: Compatible with Windows, macOS, and Linux
+### サーバー要件
+- **Mass++サーバー**: ポート8191で稼働
+- **OS**: Windows, macOS, Linux対応
 
-### Connection confirmation
+### 接続確認
 ```bash
-# Server operation check
+# サーバー稼働確認
 curl -X POST http://localhost:8191/io_get_spectra_count \
   -H "Content-Type: application/json" \
   -d "null"
 ```
 
-Success response:
+成功時のレスポンス:
 ```json
 {"count": 0}
 ```
 
 ---
 
-## API Specifications
+## API仕様
 
-### Common Specifications
+### 共通仕様
 
-#### HTTP header
+#### HTTPヘッダー
 ```
 POST /endpoint
 Content-Type: application/json
 ```
 
-#### Response Format
-- **Success**: HTTP status 200 + JSON data
-- **Error**: HTTP status 400-500 + error message
+#### レスポンス形式
+- **成功**: HTTPステータス200 + JSONデータ
+- **エラー**: HTTPステータス400-500 + エラーメッセージ
 
-#### Error Handling
+#### エラーハンドリング
 ```json
 {
   "error": "Error message",
@@ -102,9 +102,9 @@ Content-Type: application/json
 
 ---
 
-### Data Management API
+### データ管理API
 
-#### 1. Sample creation
+#### 1. サンプル作成
 
 ```http
 POST /io_create_sample
@@ -113,7 +113,7 @@ Content-Type: application/json
 null
 ```
 
-**Response**
+**レスポンス**
 ```json
 {
   "id": "sample_12345"
@@ -122,14 +122,14 @@ null
 
 ---
 
-#### 2. Adding scan data
+#### 2. スキャンデータ追加
 
 ```http
 POST /io_add_scan
 Content-Type: application/json
 ```
 
-**Request body**
+**リクエストボディ**
 ```json
 {
   "id": "sample_12345",
@@ -146,20 +146,20 @@ Content-Type: application/json
 }
 ```
 
-**Parameter details**
+**パラメータ詳細**
 
-| Field | Type | Required | Description | Example |
+| フィールド | 型 | 必須 | 説明 | 例 |
 |-----------|------|------|------|-----|
-| `id` | string | Yes | Sample ID | "sample_12345" |
-| `msLevel` | integer | Yes | MS level | 1, 2, 3... |
-| `precursorMz` | number | Yes | precursor m/z | 123.45 (-1.0 for MS1) |
-| `rt` | number | Yes | Retention time (sec) | 60.5 |
-| `points` | array | Yes | Spectrum data | [{"x": m/z, "y": intensity}] |
-| `centroidMode` | boolean | Yes | Centroid mode | true/false |
-| `minMz` | number | Yes | Minimum m/z for display | 99.0 |
-| `maxMz` | number | Yes | Maximum m/z for display | 200.0 |
+| `id` | string | ○ | サンプルID | "sample_12345" |
+| `msLevel` | integer | ○ | MSレベル | 1, 2, 3... |
+| `precursorMz` | number | ○ | プリカーサーm/z | 123.45 (MS1は-1.0) |
+| `rt` | number | ○ | 保持時間（秒） | 60.5 |
+| `points` | array | ○ | スペクトラムデータ | [{"x": m/z, "y": intensity}] |
+| `centroidMode` | boolean | ○ | セントロイドモード | true/false |
+| `minMz` | number | ○ | 表示用最小m/z | 99.0 |
+| `maxMz` | number | ○ | 表示用最大m/z | 200.0 |
 
-**Response**
+**レスポンス**
 ```json
 {
   "status": "success"
@@ -168,14 +168,14 @@ Content-Type: application/json
 
 ---
 
-#### 3. Adding peak annotation
+#### 3. ピーク注釈追加
 
 ```http
 POST /io_add_annotation
 Content-Type: application/json
 ```
 
-**Request body**
+**リクエストボディ**
 ```json
 [
   {
@@ -190,14 +190,14 @@ Content-Type: application/json
 
 ---
 
-#### 4. Saving data
+#### 4. データ保存
 
 ```http
 POST /io_flush
 Content-Type: application/json
 ```
 
-**Request body**
+**リクエストボディ**
 ```json
 {
   "id": "sample_12345",
@@ -207,9 +207,9 @@ Content-Type: application/json
 
 ---
 
-### 📤 Data Retrieval API
+### 📤 データ抽出API
 
-#### 5. Obtaining the total number of spectra
+#### 5. スペクトラム総数取得
 
 ```http
 POST /io_get_spectra_count
@@ -218,7 +218,7 @@ Content-Type: application/json
 null
 ```
 
-**Response**
+**レスポンス**
 ```json
 {
   "count": 150
@@ -227,7 +227,7 @@ null
 
 ---
 
-#### 6. Obtaining the current index
+#### 6. 現在のインデックス取得
 
 ```http
 POST /io_get_current_index
@@ -236,7 +236,7 @@ Content-Type: application/json
 null
 ```
 
-**Response**
+**レスポンス**
 ```json
 {
   "index": 5
@@ -245,21 +245,21 @@ null
 
 ---
 
-#### 7. Obtaining spectrum data
+#### 7. スペクトラムデータ取得
 
 ```http
 POST /io_get_spectrum
 Content-Type: application/json
 ```
 
-**Request body**
+**リクエストボディ**
 ```json
 {
   "index": "0"
 }
 ```
 
-**Response**
+**レスポンス**
 ```json
 {
   "id": "sample_12345",
@@ -277,7 +277,7 @@ Content-Type: application/json
 
 ---
 
-## 💻 Implementation examples by language
+## 💻 言語別実装例
 
 ### 🐍 Python
 
@@ -292,11 +292,11 @@ def call_api(endpoint, data=None):
     response = requests.post(url, headers=headers, data=body)
     return response.json()
 
-# Sample creation
+# サンプル作成
 sample = call_api('io_create_sample')
 sample_id = sample['id']
 
-# Adding Spectrum
+# スペクトラム追加
 scan_data = {
     'id': sample_id,
     'msLevel': 1,
@@ -335,7 +335,7 @@ public class MassSpecAPI {
         HttpResponse<String> response = client.send(request, 
                 HttpResponse.BodyHandlers.ofString());
         
-        // Extracting IDs from JSON responses
+        // JSONレスポンスからIDを抽出
         return mapper.readTree(response.body()).get("id").asText();
     }
 
@@ -421,7 +421,7 @@ class MassSpecAPI {
     }
 }
 
-// Usage example
+// 使用例
 $api = new MassSpecAPI();
 $sampleId = $api->createSample();
 $api->addScan($sampleId, [100.0, 101.0, 102.0], [1000, 500, 750]);
@@ -470,7 +470,7 @@ class MassSpecAPI {
     }
 }
 
-// Usage example
+// 使用例
 (async () => {
     const api = new MassSpecAPI();
     const sampleId = await api.createSample();
@@ -481,64 +481,64 @@ class MassSpecAPI {
 
 ---
 
-## Typical workflow
+## 一般的なワークフロー
 
-### Data registration flow
+### データ登録フロー
 ```
-1. Sample creation (/io_create_sample)
-   ->
-2. Adding Spectrum (/io_add_scan) * N times
-   ->
-3. Adding annotation (/io_add_annotation) # Optional
-   ->
-4. Saving data (/io_flush)
+1. サンプル作成 (/io_create_sample)
+   ↓
+2. スペクトラム追加 (/io_add_scan) × N回
+   ↓
+3. 注釈追加 (/io_add_annotation) ※任意
+   ↓
+4. データ保存 (/io_flush)
 ```
 
-### Data Extraction Flow
+### データ抽出フロー
 ```
-1. Check the total number (/io_get_spectra_count)
-   ->
-2. Obtaining spectrum (/io_get_spectrum) * N times
-   ->
-3. Data analysis and export
+1. 総数確認 (/io_get_spectra_count)
+   ↓
+2. スペクトラム取得 (/io_get_spectrum) × N回
+   ↓
+3. データ分析・エクスポート
 ```
 
 ---
 
-## Troubleshooting
+## トラブルシューティング
 
-### Common errors
+### よくあるエラー
 
-#### Connection Error
+#### 接続エラー
 ```
 Error: Connection refused
 ```
-**Solution**: Check that the Mass++ server is running and that port 8191 is running
+**解決法**: Mass++サーバーの起動確認、ポート8191の確認
 
-#### JSON format error
+#### JSON形式エラー
 ```
 HTTP 400: Invalid JSON
 ```
-**Solution**: Check the format of the request body and the Content-Type header
+**解決法**: リクエストボディの形式確認、Content-Typeヘッダーの確認
 
-#### Empty response
+#### 空のレスポンス
 ```
 HTTP 200: Empty response
 ```
-**Solution**: Check API endpoints and validate request parameters
+**解決法**: APIエンドポイントの確認、リクエストパラメータの検証
 
-### How to debug
+### デバッグ方法
 
-#### 1. Basic Connection Test
+#### 1. 基本接続テスト
 ```bash
 curl -v -X POST http://localhost:8191/io_get_spectra_count \
   -H "Content-Type: application/json" \
   -d "null"
 ```
 
-#### 2. Response confirmation
+#### 2. レスポンス確認
 ```bash
-# Detailed HTTP response display
+# 詳細なHTTPレスポンス表示
 curl -i -X POST http://localhost:8191/io_create_sample \
   -H "Content-Type: application/json" \
   -d "null"
@@ -546,18 +546,18 @@ curl -i -X POST http://localhost:8191/io_create_sample \
 
 ---
 
-## 📞 Support
+## 📞 サポート
 
-### API Specifications
+### API仕様
 - **Version**: 1.0
-- **Last update**: July, 2025
+- **最終更新**: 2025年7月
 
-### Notes
-- All endpoints use the POST method.
-- Send `null` even if no request body is required.
-- Be careful when converting numbers to strings (such as index parameters).
-- Base64 encoded image data can be large in size.
+### 注意事項
+- 全エンドポイントはPOSTメソッドを使用
+- リクエストボディが不要な場合も`null`を送信
+- 数値の文字列変換に注意（indexパラメータなど）
+- Base64エンコード画像データは大きなサイズになる可能性あり
 
 ---
 
-*This API is designed for efficient processing of mass spectrometry data. Please refer to the implementation examples in each language to develop a client suitable for your environment.**
+*このAPIは質量分析データの効率的な処理を目的として設計されています。各言語での実装例を参考に、お使いの環境に適したクライアントを開発してください。*
