@@ -3,9 +3,9 @@
 ## 📋 Contents
 1. [Quickstart](#Quickstart)
 2. [API Overview](#api-overview)
-3. [Setup Guide](#Setup Guide)
-4. [API Specifications](#api specifications)
-5. [Implementation examples by language](#Implementation examples by language)
+3. [Setup Guide](#setup-guide)
+4. [API Specifications](#api-specifications)
+5. [Implementation examples by language](#implementation-examples-by-language)
 6. [Troubleshooting](#troubleshooting)
 
 ---
