@@ -17,7 +17,7 @@
 
 ```
 1. サンプル作成        → POST /io_create_sample
-2. スペクトラム追加    → POST /io_add_scan
+2. スペクトル追加    → POST /io_add_scan
 3. 注釈追加（任意）    → POST /io_add_annotation
 4. データ保存         → POST /io_flush
 5. データ抽出         → POST /io_get_spectrum
@@ -31,7 +31,7 @@ curl -X POST http://localhost:8191/io_create_sample \
   -H "Content-Type: application/json" \
   -d "null"
 
-# 2. スペクトラム総数確認
+# 2. スペクトル総数確認
 curl -X POST http://localhost:8191/io_get_spectra_count \
   -H "Content-Type: application/json" \
   -d "null"
@@ -50,10 +50,10 @@ curl -X POST http://localhost:8191/io_get_spectra_count \
 - **文字エンコーディング**: UTF-8
 
 ### 主な機能
-- 質量分析スペクトラムデータの登録
+- 質量分析スペクトルデータの登録
 - ピーク注釈の追加
 - データの永続化
-- スペクトラムデータの抽出
+- スペクトルデータの抽出
 
 
 ---
@@ -155,7 +155,7 @@ Content-Type: application/json
 | `msLevel` | integer | ○ | MSレベル | 1, 2, 3... |
 | `precursorMz` | number | ○ | プリカーサーm/z | 123.45 (MS1は-1.0) |
 | `rt` | number | ○ | 保持時間（秒） | 60.5 |
-| `points` | array | ○ | スペクトラムデータ | [{"x": m/z, "y": intensity}] |
+| `points` | array | ○ | スペクトルデータ | [{"x": m/z, "y": intensity}] |
 | `centroidMode` | boolean | ○ | セントロイドモード | true/false |
 | `minMz` | number | ○ | 表示用最小m/z | 99.0 |
 | `maxMz` | number | ○ | 表示用最大m/z | 200.0 |
@@ -210,7 +210,7 @@ Content-Type: application/json
 
 ### 📤 データ抽出API
 
-#### 5. スペクトラム総数取得
+#### 5. スペクトル総数取得
 
 ```http
 POST /io_get_spectra_count
@@ -246,7 +246,7 @@ null
 
 ---
 
-#### 7. スペクトラムデータ取得
+#### 7. スペクトルデータ取得
 
 ```http
 POST /io_get_spectrum
@@ -297,7 +297,7 @@ def call_api(endpoint, data=None):
 sample = call_api('io_create_sample')
 sample_id = sample['id']
 
-# スペクトラム追加
+# スペクトル追加
 scan_data = {
     'id': sample_id,
     'msLevel': 1,
@@ -488,7 +488,7 @@ class MassSpecAPI {
 ```
 1. サンプル作成 (/io_create_sample)
    ↓
-2. スペクトラム追加 (/io_add_scan) × N回
+2. スペクトル追加 (/io_add_scan) × N回
    ↓
 3. 注釈追加 (/io_add_annotation) ※任意
    ↓
@@ -499,7 +499,7 @@ class MassSpecAPI {
 ```
 1. 総数確認 (/io_get_spectra_count)
    ↓
-2. スペクトラム取得 (/io_get_spectrum) × N回
+2. スペクトル取得 (/io_get_spectrum) × N回
    ↓
 3. データ分析・エクスポート
 ```
